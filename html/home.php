@@ -1,8 +1,8 @@
-<?php 
+<?php
     include('db_conn.php');
     include('logout_popup.php');
     
-    session_start();
+session_start();
 
 if(!isset($_SESSION['sess_user'])) {
 
