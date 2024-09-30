@@ -1,74 +1,30 @@
-[![nginx 1.17.2](https://img.shields.io/badge/nginx-1.17.2-brightgreen.svg?&logo=nginx&logoColor=white&style=for-the-badge)](https://nginx.org/en/CHANGES) [![php 7.3.8](https://img.shields.io/badge/php--fpm-7.3.8-blue.svg?&logo=php&logoColor=white&style=for-the-badge)](https://secure.php.net/releases/7_3_8.php)
+## DOCKERIZING A PHP 2-TIER WEB APPLICATION
 
+This is a web application that we use in my organization to manage and organize or DevOps tools.
 
-## Introduction
-This is a Dockerfile to build a debian based container image running nginx and php-fpm 7.3.x / 7.2.x / 7.1.x / 7.0.x & Composer.
+We manually built this project in the this documention [here](https://github.com/nbomasi/php-app-aws-IaaS/blob/main/README.md)
 
-### Versioning
-| Docker Tag | GitHub Release | Nginx Version | PHP Version | Debian Version |
-|-----|-------|-----|--------|--------|
-| latest | master Branch |1.17.2 | 7.3.8 | buster |
+But at this point there is a need for us to contenerize our application using docker engine, we actually want to take the advantages of
 
+docker to my organization.
 
-## How to use this repository
-The build is automatically triggered by a git push to your feature/[branch]
+We built this project using docker-compose to make networking seamless, and it is done using 2 aproaches:
 
-## First clone the repository to your workstation
-```
-$ git clone https://gitlab.com/propitix/microservices/php-frontend.git
-$ cd frontend-propitix
-```
+1. Cloning down the file to my local server and then copy the file during built. The app Dockerfile is [here](Dockerfile)
+2. Cloning the source code at docker built time. The app Dockerfile is [here](app/Dockerfile)
 
-Create a feature branch. # Always start with feature/[name of your branch]
-```
-git branch -b feature/add-css-style-to-about-us-page
-```
+In each case the MYSQL container was ran using MYSQL public image on dockerhub. Take note that the variables are located in .env file
 
+**NOTE:** For best practice, the .env file should not be push to the public repository, but I pushed it there for learning purpose.
 
-Update the application code in
-```
-./html/
-```
+This means you MUST edit it to suite your environment.
 
-Then add/commit/push to gitlab
+The docker-compose file is [here](docker-compose.yaml)
+
+Which ever method that suite your environment, to run container, use the following command while in the project directory,
+and ensure that the docker-compose.yaml will is located directly in the project directory.
+
+```markdown
+docker compose up -d
 
 ```
-git status # to see your changes
-```
-
-```
-git add --all # If you are satisfied with your changes and willing to push everything. Otherwise, select only the files to add
-```
-
-```
-git commit -m "Put some message about this push here"
-```
-
-## Push your changes to gitlab, and merge to dev branch
-```
-git push --set-upstream origin feature/[Your branch name]
-```
-
-### Validate your changes have been triggered by gitlab-ci in
-[propitix-scm] (https://gitlab.com/propitix/microservices/frontend-propitix)
-
-### Check the image have been pushed to
-[Google Container Registry] (https://console.cloud.google.com/gcr/images/non-prod-pdz/EU/frontend-propitix?project=non-prod-pdz&authuser=1&gcrImageListsize=30) (Depending on the environment. Either non-prod or prod)
-
-## pulling the image
-```
-docker pull eu.gcr.io/$environment/frontend-propitix:$tag-version
-```
-
-## Running (You can do this step without the pulling the above as it will put down if not found locally)
-To run the container:
-```
-$ docker run -d eu.gcr.io/$environment/frontend-propitix:$tag-version
-```
-
-Default web root:
-```
-/usr/share/nginx/html
-```
-
-## If you require permissions to GCP, or Gitlab resources, please talk to dare@propitix.com

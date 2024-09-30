@@ -1,12 +1,13 @@
 services:
   tooling_frontend:
-    build: .
+    build: 
+      context: ./app
     ports:
       - "5000:80"
     volumes:
       - tooling_frontend:/var/www/html  # Named volume for frontend
-    networks:
-      - tooling-network
+        #    networks:
+        #- tooling-network
     container_name: tooling-cont
     restart: on-failure
     depends_on:
@@ -15,8 +16,8 @@ services:
   db:
     image: mysql:5.7
     restart: always
-    networks:
-      - tooling-network
+      #networks:
+      #- tooling-network
     container_name: toolingdb
     environment:
       - MYSQL_DATABASE=${MYSQL_DBNAME}
@@ -27,9 +28,9 @@ services:
       - db:/var/lib/mysql  # Named volume for database data
       - ./tooling_db_schema.sql:/docker-entrypoint-initdb.d/tooling_db_schema.sql  # Mount schema directory
 
-networks:
-  tooling-network:
-    driver: bridge
+        #networks:
+        #tooling-network:
+        # driver: bridge
 
 volumes:
   tooling_frontend:
