@@ -28,3 +28,9 @@ and ensure that the docker-compose.yaml will is located directly in the project 
 docker compose up -d
 
 ```
+
+Please find the web page below: 
+
+![page1](images/page1.png)
+
+![page2](images/page2.png)
