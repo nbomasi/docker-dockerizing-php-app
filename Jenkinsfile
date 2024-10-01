@@ -30,7 +30,8 @@ pipeline {
                 script {
                     echo "Running Test for the tooling site..."
                     // Ensure your tooling site is running, use curl to check the HTTP status code
-                    def responseCode = sh(script: "curl -o /dev/null -s -w '%{http_code}' http://16.171.6.232:80", returnStdout: true)
+                    //def responseCode = sh(script: "curl -o /dev/null -s -w '%{http_code}' http://16.171.6.232:80", returnStdout: true)
+                    def responseCode = sh(script: "curl -o /dev/null -s -w '%{http_code}' http://16.171.6.232:80/health", returnStdout: true).trim()
                     if (responseCode != "200") {
                         error "Test failed: Tooling site returned HTTP status code ${responseCode}"
                     }
